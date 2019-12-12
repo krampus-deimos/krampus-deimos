@@ -1,4 +1,4 @@
-package kenhowell;
+package kenhowell.timeapp;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -74,7 +74,21 @@ public class TimeRecord {
         return ((clockOut - clockIn) - totalBreak + bonusMins);
     };
 
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
+        String testme = "not a number";
+
         TimeRecord Monday = new TimeRecord("9:15 AM","9:15 PM","30");
         TimeRecord Tuesday = new TimeRecord("3:15 PM","12:15 AM","30");
         TimeRecord Wednesday = new TimeRecord("8:15 AM","8:15 AM","60");
@@ -92,6 +106,9 @@ public class TimeRecord {
         BigDecimal total = new BigDecimal(Monday.calculateHours() + Tuesday.calculateHours() + Wednesday.calculateHours() + Thursday.calculateHours() + Friday.calculateHours() );
         total = total.setScale(2, RoundingMode.CEILING);
         System.out.println("total = " + total);
+
+
+
 
     }
 }
