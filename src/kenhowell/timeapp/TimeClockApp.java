@@ -50,13 +50,19 @@ public class TimeClockApp {
                             System.out.printf("Understood. Returning to beginning of menu.%n");
                         }
                     }
+                    break;
 
 
                 case "b":
-
+                    System.out.printf("Printing your request: %n");
+                    TimeRecord.printRecords(workingRecord);
+                    break;
 
                 case "c":
-
+                    System.out.printf("Thank you for using D-Mos time management! Here is your tabulation for data entered today:%n");
+                    TimeRecord.printRecords(workingRecord);
+                    System.exit(0);
+                    break;
             }
         }
 
