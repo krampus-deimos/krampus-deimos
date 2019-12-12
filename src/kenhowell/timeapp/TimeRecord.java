@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class TimeRecord {
@@ -44,7 +45,7 @@ public class TimeRecord {
         this.breakDeduction = breaktime;
     }
 
-    double calculateHours(){
+     public double calculateHours(){
         double clockIn = Double.parseDouble(this.startingTime);
         double clockOut = Double.parseDouble(this.endingTime);
         double totalBreak = Double.parseDouble(this.breakDeduction) / 60;
@@ -86,8 +87,26 @@ public class TimeRecord {
         return true;
     }
 
+     public static void printRecords(ArrayList allRecords){
+        TimeRecord bucketTime;
+        int bucketInt = 0;
+
+         System.out.printf("Calculating records. . %n%n");
+         for (int i = 0; i < allRecords.size(); i++){
+            bucketTime = (TimeRecord) allRecords.get(i);
+            bucketInt += bucketTime.calculateHours();
+            System.out.printf("Record %d:: %s hours.%n", i+1, bucketTime.calculateHours());
+        }
+         BigDecimal total = new BigDecimal(bucketInt);
+         total = total.setScale(2, RoundingMode.CEILING);
+         System.out.println("Total hours for records = " + total);
+
+     }
+
     public static void main(String[] args) {
         String testme = "not a number";
+
+        ArrayList<TimeRecord> testAL = new ArrayList<>();
 
         TimeRecord Monday = new TimeRecord("9:15 AM","9:15 PM","30");
         TimeRecord Tuesday = new TimeRecord("3:15 PM","12:15 AM","30");
@@ -95,18 +114,20 @@ public class TimeRecord {
         TimeRecord Thursday = new TimeRecord("7:15 AM","3:45 PM","30");
         TimeRecord Friday = new TimeRecord("9:15 PM","5:45 AM","30");
 
+        testAL.add(Monday);
+        testAL.add(Tuesday);
+        testAL.add(Wednesday);
+        testAL.add(Thursday);
+        testAL.add(Friday);
 
 
-        System.out.println("Monday.calculateHours() = " + Monday.calculateHours());
-        System.out.println("Tuesday.calculateHours() = " + Tuesday.calculateHours());
-        System.out.println("Wednesday.calculateHours() = " + Wednesday.calculateHours());
-        System.out.println("Thursday.calculateHours() = " + Thursday.calculateHours());
-        System.out.println("Friday.calculateHours() = " + Friday.calculateHours());
+printRecords(testAL);
 
-        BigDecimal total = new BigDecimal(Monday.calculateHours() + Tuesday.calculateHours() + Wednesday.calculateHours() + Thursday.calculateHours() + Friday.calculateHours() );
-        total = total.setScale(2, RoundingMode.CEILING);
-        System.out.println("total = " + total);
-
+//
+//        BigDecimal total = new BigDecimal(Monday.calculateHours() + Tuesday.calculateHours() + Wednesday.calculateHours() + Thursday.calculateHours() + Friday.calculateHours() );
+//        total = total.setScale(2, RoundingMode.CEILING);
+//        System.out.println("total = " + total);
+//
 
 
 
